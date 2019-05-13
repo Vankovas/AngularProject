@@ -1,0 +1,73 @@
+<div class="headline-wrapper">
+  <h1 class="headline">
+    Departments
+  </h1>
+</div>
+
+<div class="search-wrapper">
+  Search For Departments
+  <input [(ngModel)]="searchName" />
+</div>
+
+<div class="table-wrapper">
+  <div class="table-heading">Departments</div>
+  <table class="table-container">
+    <thead>
+      <tr>
+        <th>ID:</th>
+        <th>Name:</th>
+        <th>Building:</th>
+        <th>Employees:</th>
+      </tr>
+    </thead>
+    <tbody class="table-body">
+      <tr *ngFor="let department of apiDepartments | filter:searchName" (click)="onSelect(department)" [class.selected]="department === selectedDepartment">
+        <td>{{department.id}}</td>
+        <td>{{department.name}}</td>
+        <td>{{department.building}}</td>
+        <td>
+          <span>{{apiEmployees | employeeFromTaskPipe:department.employees}}</span>
+        </td>
+    </tbody>
+  </table>
+</div>
+
+<div style="width: 50%;margin: 0 auto 1rem auto;margin-top: 1rem;">
+  <mat-accordion>
+    <mat-expansion-panel>
+      <mat-expansion-panel-header>
+        <mat-panel-title>
+          Add Department
+        </mat-panel-title>
+        <mat-panel-description>
+          Input a department name
+        </mat-panel-description>
+      </mat-expansion-panel-header>
+
+      <mat-form-field style="width:100%;">
+        <input matInput #departmentName placeholder="Name" style="text-align: center;">
+
+      </mat-form-field>
+      <button class="addTask-btn" (click)="addDepartment(departmentName.value)">Add Department</button>
+    </mat-expansion-panel>
+  </mat-accordion>
+</div>
+
+<div class="task-options departments-options">
+  <div class="selectedTask-wrapper selectedDepartment-wrapper" *ngIf="selectedDepartment">
+    <h2 class="selectedTask-title selectedDepartment-title">{{selectedDepartment.name}} details:</h2>
+    <div><span>ID Number:</span> {{selectedDepartment.id}}</div>
+    <div>
+      <label>Name:
+        <input class="selectedTask-name-input selectedDepartment-name-input" [(ngModel)]="selectedDepartment.name"
+          placeholder="name">
+      </label>
+    </div>
+  </div>
+</div>
+
+<div class="removeTask-wrapper removeDepartment-wrapper" *ngIf="selectedDepartment">
+  <button class="addTask-btn" style="margin-bottom:1rem;" *ngIf="selectedDepartment" (click)="save()">Save department
+    name</button>
+  <button class="removeTask-btn removeDepartment-btn" (click)="delete()">Remove Selected Department</button>
+</div>

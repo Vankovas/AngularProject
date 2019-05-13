@@ -1,0 +1,101 @@
+<!-- Tasks -->
+<div class="headline-wrapper " style="background: none">
+    <h1 class="headline">
+        Tasks
+    </h1>
+</div>
+<div class="search-wrapper">
+    Search For Tasks
+    <input [(ngModel)]="searchName" />
+</div>
+<div class="table-wrapper">
+    <div class="table-heading">Tasks</div>
+    <table class="table-container">
+        <thead>
+            <tr>
+                <th>ID:</th>
+                <th>Name:</th>
+                <th>Employees:</th>
+            </tr>
+        </thead>
+        <tbody class="table-body">
+            <tr *ngFor="let task of apiTasks | filter:searchName" (click)="onSelect(task)" [class.selected]="task === selectedTask">
+                <td>{{task.id}}</td>
+                <td>{{task.name}}</td>
+                <td>
+                    <span>{{apiEmployees | employeeFromTaskPipe:task.employees}}</span>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+</div>
+<!-- Departments -->
+<div class="headline-wrapper" style="background: none">
+    <h1 class="headline">
+        Departments
+    </h1>
+</div>
+
+<div class="search-wrapper">
+    Search For Departments
+    <input [(ngModel)]="searchName" />
+</div>
+
+<div class="table-wrapper">
+    <div class="table-heading">Departments</div>
+    <table class="table-container">
+        <thead>
+            <tr>
+                <th>ID:</th>
+                <th>Name:</th>
+                <th>Building:</th>
+                <th>Employees:</th>
+            </tr>
+        </thead>
+        <tbody class="table-body">
+            <tr *ngFor="let department of apiDepartments | filter:searchName" (click)="onSelect(department)"
+                [class.selected]="department === selectedDepartment">
+                <td>{{department.id}}</td>
+                <td>{{department.name}}</td>
+                <td>{{department.building}}</td>
+                <td>
+                    <span>{{apiEmployees | employeeFromTaskPipe:department.employees}}</span>
+                </td>
+        </tbody>
+    </table>
+</div>
+<!-- Employees -->
+<div class="headline-wrapper" style="background: none">
+    <h1 class="headline">
+        Employees
+    </h1>
+</div>
+
+<div class="search-wrapper">
+    Search For Employees
+    <input [(ngModel)]="searchName" />
+</div>
+
+<div class="table-wrapper">
+    <div class="table-heading">Employees</div>
+    <table class="table-container">
+        <thead>
+            <tr>
+                <th>ID:</th>
+                <th>First Name:</th>
+                <th>Last Name:</th>
+                <th>Department:</th>
+            </tr>
+        </thead>
+        <tbody class="table-body">
+            <tr *ngFor="let employee of apiEmployees | filter:searchName" (click)="onSelect(employee)" [class.selected]="employee === selectedEmployee">
+                <td>{{employee.id}}</td>
+                <td>{{employee.first_name}}</td>
+                <td>{{employee.last_name}}</td>
+                <td>
+                    <span>{{apiDepartments | departmentFromEmployeePipe:employee.department_id}}</span>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+</div>

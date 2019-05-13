@@ -1,0 +1,60 @@
+<div class="headline-wrapper">
+  <h1 class="headline">
+    Tasks
+  </h1>
+</div>
+<div class="search-wrapper">
+  Search For Tasks
+  <input [(ngModel)]="searchName" />
+</div>
+<div class="table-wrapper">
+  <div class="table-heading">Tasks</div>
+  <table class="table-container">
+    <thead>
+      <tr>
+        <th>ID:</th>
+        <th>Name:</th>
+        <th>Employees:</th>
+      </tr>
+    </thead>
+    <tbody class="table-body">
+      <tr *ngFor="let task of apiTasks | filter:searchName" (click)="onSelect(task)" [class.selected]="task === selectedTask">
+        <td>{{task.id}}</td>
+        <td>{{task.name}}</td>
+        <td>
+          <span>{{apiEmployees | employeeFromTaskPipe:task.employees}}</span>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+</div>
+
+<div style="width: 50%;margin: 0 auto 1rem auto;margin-top: 1rem;">
+  <mat-accordion>
+    <mat-expansion-panel>
+      <mat-expansion-panel-header>
+        <mat-panel-title>
+          Add Task
+        </mat-panel-title>
+        <mat-panel-description>
+          Input a task name
+        </mat-panel-description>
+      </mat-expansion-panel-header>
+
+      <mat-form-field style="width:100%;">
+        <input matInput #taskName placeholder="Name" style="text-align: center;">
+
+      </mat-form-field>
+      <button class="addTask-btn" (click)="addTask(taskName.value)">Add Task</button>
+    </mat-expansion-panel>
+  </mat-accordion>
+</div>
+
+<div class="task-options">
+  <app-task-detail [task]="selectedTask"></app-task-detail>
+  <button class="addTask-btn" style="margin-bottom:1rem;" *ngIf="selectedTask" (click)="save()">Save task name</button>
+</div>
+
+<div class="removeTask-wrapper" *ngIf="selectedTask">
+  <button class="removeTask-btn" (click)="delete()">Remove Selected Task</button>
+</div>

@@ -1,0 +1,81 @@
+<div class="headline-wrapper">
+  <h1 class="headline">
+    Employees
+  </h1>
+</div>
+
+<div class="search-wrapper">
+  Search For Employees
+  <input [(ngModel)]="searchName" />
+</div>
+
+<div class="table-wrapper">
+  <div class="table-heading">Employees</div>
+  <table class="table-container">
+    <thead>
+      <tr>
+        <th>ID:</th>
+        <th>First Name:</th>
+        <th>Last Name:</th>
+        <th>Department:</th>
+      </tr>
+    </thead>
+    <tbody class="table-body">
+      <tr *ngFor="let employee of apiEmployees | filter:searchName" (click)="onSelect(employee)" [class.selected]="employee === selectedEmployee">
+        <td>{{employee.id}}</td>
+        <td>{{employee.first_name}}</td>
+        <td>{{employee.last_name}}</td>
+        <td>
+          <span>{{apiDepartments | departmentFromEmployeePipe:employee.department_id}}</span>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+</div>
+
+<div style="width: 50%;margin: 0 auto 1rem auto;margin-top: 1rem;">
+  <mat-accordion>
+    <mat-expansion-panel>
+      <mat-expansion-panel-header>
+        <mat-panel-title>
+          Add Employee
+        </mat-panel-title>
+        <mat-panel-description>
+          Input a employee name
+        </mat-panel-description>
+      </mat-expansion-panel-header>
+
+      <mat-form-field style="width:100%;">
+        <input matInput placeholder="FirstName" #employeeFirstName style="text-align: center;">
+      </mat-form-field>
+      <mat-form-field style="width:100%;">
+        <input matInput placeholder="LastName" #employeeLastName style="text-align: center;">
+      </mat-form-field>
+      <button class="addTask-btn" (click)="addEmployee(employeeFirstName.value,employeeLastName.value)">Add Employee</button>
+    </mat-expansion-panel>
+  </mat-accordion>
+</div>
+
+<div class="task-options employee-options">
+  <div class="selectedTask-wrapper selectedEmployee-wrapper" *ngIf="selectedEmployee">
+    <h2 class="selectedTask-title selectedEmployee-title">{{selectedEmployee.first_name}}
+      {{selectedEmployee.last_name}}:</h2>
+    <div><span>ID Number:</span> {{selectedEmployee.id}}</div>
+    <div>
+      <label>First Name:
+        <input style="margin-bottom:0.5rem;" class="selectedTask-name-input selectedEmployee-name-input" [(ngModel)]="selectedEmployee.first_name"
+          placeholder="name">
+      </label>
+      <label>Last Name:
+        <input class="selectedTask-name-input selectedEmployee-name-input" [(ngModel)]="selectedEmployee.last_name"
+          placeholder="name">
+      </label>
+    </div>
+  </div>
+</div>
+
+
+<div class="removeTask-wrapper removeEmployee-wrapper" *ngIf="selectedEmployee">
+  <button class="addTask-btn" style="margin-bottom:1rem;" *ngIf="selectedEmployee" (click)="save()">Save employee name</button>
+  <button class="removeTask-btn removeEmployee-btn" (click)="delete()">Remove Selected Employee</button>
+</div>

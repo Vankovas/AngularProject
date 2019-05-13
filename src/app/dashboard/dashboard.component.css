@@ -1,0 +1,21 @@
+*,
+::after,
+::before {
+  box-sizing: border-box;
+}
+
+.headline-wrapper {
+  background-color: aquamarine;
+}
+
+.task-headline-wrapper {
+  background-color: #448bff;
+}
+.employee-headline-wrapper {
+  background-color: #fe4242;
+}
+
+.department-headline-wrapper {
+  background-color: #44ffb1;
+}
+
